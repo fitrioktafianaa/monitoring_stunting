@@ -1,8 +1,9 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation" // 1. TAMBAHKAN IMPORT INI
 import * as z from "zod"
-import { IconLock, IconMail, IconBrandGoogle, IconBrandWhatsapp } from "@tabler/icons-react"
+import { IconLock, IconMail, IconBrandWhatsapp } from "@tabler/icons-react"
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Format email salah!" }),
@@ -10,6 +11,7 @@ const loginSchema = z.object({
 })
 
 export default function LoginPage() {
+  const router = useRouter() // 2. INISIALISASI ROUTER DI SINI
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
@@ -29,10 +31,12 @@ export default function LoginPage() {
       setErrors(formattedErrors)
     } else {
       console.log("Data Login:", result.data)
-      alert("Login berhasil!")
       
-            setEmail("")
-            setPassword("")
+      // 3. DI SINI PROSES REDIRECT LANGSUNG KE DASHBOARD
+      router.push("/dashboard") 
+      
+      setEmail("")
+      setPassword("")
     }
   }
 
@@ -43,7 +47,7 @@ export default function LoginPage() {
         {/* Header Section */}
         <div className="flex flex-col justify-center items-center mb-6 gap-1">
           <h2 className="text-xl font-bold text-slate-800">Monitoring Stunting</h2>
-          <p className="text-sm text-slate-500 font-sans">Silakan masuk ke akun Anda</p>
+          <p className="text-sm text-slate-500 font-[sans-serif]">Silakan masuk ke akun Anda</p>
         </div>
 
         {/* Form Section */}
@@ -51,7 +55,7 @@ export default function LoginPage() {
           
           {/* Input Email */}
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-slate-700">Email</label>
+            <label className="text-sm font-medium font-[sans-serif] text-slate-700">Email</label>
             <div className="relative flex items-center">
               <IconMail className="absolute left-3 h-5 w-5 text-slate-400" />
               <input 
@@ -59,15 +63,15 @@ export default function LoginPage() {
                 placeholder="nama@email.com" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-md border border-slate-300 bg-white py-2 pl-10 pr-3 text-sm font-bold placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 text-slate-800"
+                className="w-full rounded-md border border-slate-300 bg-white py-2 pl-10 pr-3 text-sm font-bold placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 text-slate-800 font-[sans-serif]"
               />
             </div>
-            {errors.email && <p className="text-xs text-red-500 font-sans">{errors.email}</p>}
+            {errors.email && <p className="text-xs text-red-500 font-sans font-[sans-serif]">{errors.email}</p>}
           </div>
 
           {/* Input Password */}
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-slate-700">Password</label>
+            <label className="text-sm font-medium text-slate-700 font-[sans-serif]">Password</label>
             <div className="relative flex items-center">
               <IconLock className="absolute left-3 h-5 w-5 text-slate-400" />
               <input 
@@ -75,16 +79,16 @@ export default function LoginPage() {
                 placeholder="••••••••" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-md border border-slate-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 text-slate-800"
+                className="w-full rounded-md border border-slate-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 text-slate-800 font-[sans-serif]"
               />
             </div>
-            {errors.password && <p className="text-xs text-red-500 font-sans">{errors.password}</p>}
+            {errors.password && <p className="text-xs text-red-500 font-san font-[sans-serif]">{errors.password}</p>}
           </div>
 
           {/* Button Submit */}
           <button 
             type="submit" 
-            className="w-full bg-blue-600 py-2 rounded-md text-sm font-medium text-white transition hover:bg-blue-700"
+            className="w-full bg-blue-600 py-2 rounded-md text-sm font-medium font-[sans-serif] text-white transition hover:bg-blue-700"
           >
             Masuk
           </button>
@@ -92,17 +96,17 @@ export default function LoginPage() {
 
         {/* Divider */}
         <div className="relative flex items-center justify-center my-4 text-xs text-slate-400 uppercase">
-          <span className="relative z-10 bg-white px-2">atau</span>
+          <span className="relative z-10 bg-white px-2 font-[sans-serif]">atau</span>
           <div className="absolute inset-0 top-2 border-t border-slate-200"></div>
         </div>
 
-        {/* Google Login Button */}
+        {/* Whatsapp Login Button */}
         <button 
           type="button" 
-          onClick={() => alert('Whatsapp Sign In')}
-          className="flex w-full items-center justify-center rounded-md border border-slate-300 bg-white py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+          onClick={() => router.push("/dashboard")} // Kamu juga bisa arahkan tombol WA langsung ke dashboard jika untuk simulasi
+          className="flex w-full items-center justify-center rounded-md border border-slate-300 bg-white py-2 text-sm font-medium font-[sans-serif] text-slate-700 transition hover:bg-slate-50"
         >
-         <IconBrandWhatsapp className="mr-2 h-4 w-4 text-green-500" />
+          <IconBrandWhatsapp className="mr-2 h-4 w-4 text-green-500 " />
           Masuk dengan Nomor Handphone
         </button>
 
