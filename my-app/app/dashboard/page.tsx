@@ -1,135 +1,122 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
+import React, { useState } from 'react';
+import Link from 'next/link';
 import { 
-  IconUsers, 
-  IconPlus, 
-  IconActivity, 
-  IconBook, 
-  IconUser, 
-  IconAlertTriangle 
-} from "@tabler/icons-react";
+  IconChartBar, 
+  IconTrendingUp, 
+  IconSearch,
+  IconStethoscope,
+  IconClock
+} from '@tabler/icons-react';
 
-export default function DashboardMainPage() {
-  // Data Dummy untuk Aktivitas Terbaru
-  const aktivitasTerbaru = [
-    { nama: "Ahmad Fauzan", umur: "14 Bulan", aksi: "Baru saja diukur oleh Bidan", waktu: "5 menit yang lalu", status: "Normal" },
-    { nama: "Siti Aminah", umur: "24 Bulan", aksi: "Pemberian Makanan Tambahan (PMT)", waktu: "1 jam yang lalu", status: "Waspada" },
-    { nama: "Budi Santoso", umur: "8 Bulan", aksi: "Pendaftaran Balita Baru", waktu: "3 jam yang lalu", status: "Normal" },
-  ];
+const daftarAnak = [
+  { id: 'dina', nama: 'Dina Mariana', usia: '18 Bulan', posyandu: 'Posyandu Sepinggan', status: 'Stunting' },
+  { id: 'bagas', nama: 'Bagas Dwi', usia: '24 Bulan', posyandu: 'Puskesmas Manggar', status: 'Gizi Kurang' },
+  { id: 'siti', nama: 'Siti Aisyah', usia: '12 Bulan', posyandu: 'Posyandu Klandasan', status: 'Stunting' },
+];
+
+export default function DashboardPage() {
+  const [activeTab, setActiveTab] = useState<'statistik' | 'grafik'>('statistik');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredData = daftarAnak.filter((anak) =>
+    anak.nama.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6 md:p-10">
-      <div className="max-w-7xl mx-auto space-y-8">
-        
-        {/* 1. WELCOME BANNER */}
-        <div className="bg-linear-to-r from-blue-600 to-indigo-700 rounded-3xl p-6 md:p-8 text-white shadow-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold">Selamat Datang, Admin! 👋</h1>
-            <p className="text-blue-100 mt-2 text-sm md:text-base max-w-xl">
-              Sistem Monitoring Stunting siap digunakan. Hari ini ada <span className="font-bold underline">12 jadwal posyandu</span> yang perlu ditinjau.
-            </p>
-          </div>
-          {/* Shortcut Tombol Input Data Anak (Sesuai Sitemap kamu) */}
-          <Link 
-            href="/dashboard/data-anak/input" // Nanti disesuaikan rutenya
-            className="flex items-center gap-2 bg-white text-blue-600 font-semibold px-5 py-3 rounded-xl hover:bg-blue-50 transition shadow-md text-sm"
-          >
-            <IconPlus size={18} /> Input Pengukuran Baru
-          </Link>
-        </div>
+    <main className="mx-auto max-w-6xl px-4 md:px-6 mt-8">
+      
+      <div className="mb-8">
+        <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900">Ringkasan Pemantauan</h1>
+        <p className="text-slate-500 mt-1">Pantau statistik status gizi dan grafik pertumbuhan balita.</p>
+      </div>
 
-        {/* 2. MINI STATS (Sekilas Info) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
-            <div className="p-3 bg-blue-50 rounded-xl text-blue-600"><IconUsers size={24} /></div>
-            <div>
-              <p className="text-xs font-semibold text-slate-400 uppercase">Total Balita Terdata</p>
-              <h3 className="text-2xl font-bold text-slate-800">142 Anak</h3>
-            </div>
-          </div>
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
-            <div className="p-3 bg-red-50 rounded-xl text-red-600"><IconAlertTriangle size={24} /></div>
-            <div>
-              <p className="text-xs font-semibold text-slate-400 uppercase">Butuh Intervensi Gizi</p>
-              <h3 className="text-2xl font-bold text-red-600">6 Anak</h3>
-            </div>
-          </div>
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
-            <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600"><IconActivity size={24} /></div>
-            <div>
-              <p className="text-xs font-semibold text-slate-400 uppercase">Sudah Diukur Bulan Ini</p>
-              <h3 className="text-2xl font-bold text-emerald-600">89% Selesai</h3>
-            </div>
-          </div>
-        </div>
+      <div className="flex gap-3 mb-6 border-b border-slate-200 pb-px">
+        <button onClick={() => setActiveTab('statistik')} className={`flex items-center gap-2 px-4 py-2.5 text-sm font-bold border-b-2 transition-all cursor-pointer ${activeTab === 'statistik' ? 'border-blue-500 text-blue-600' : 'border-transparent text-slate-400 hover:text-slate-600'}`}>
+          <IconChartBar size={20} /> Data Statistik
+        </button>
+        <button onClick={() => setActiveTab('grafik')} className={`flex items-center gap-2 px-4 py-2.5 text-sm font-bold border-b-2 transition-all cursor-pointer ${activeTab === 'grafik' ? 'border-blue-500 text-blue-600' : 'border-transparent text-slate-400 hover:text-slate-600'}`}>
+          <IconTrendingUp size={20} /> Grafik Pertumbuhan
+        </button>
+      </div>
 
-        {/* 3. DUA KOLOM: AKTIVITAS TERBARU & AKSES CEPAT SITEMAP */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Kolom Kiri (Lebar): Log Aktivitas Terkini */}
-          <div className="lg:col-span-2 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                <IconActivity className="text-blue-600" size={20} /> Aktivitas Posyandu Terkini
-              </h2>
-              <span className="text-xs text-blue-600 font-semibold cursor-pointer hover:underline">Lihat Semua</span>
-            </div>
+      {activeTab === 'statistik' && (
+        <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"><span className="text-sm text-slate-500">Total Balita</span><p className="text-3xl font-black">1,245</p></div>
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"><span className="text-sm text-slate-500">Gizi Normal</span><p className="text-3xl font-black text-emerald-600">1,080</p></div>
+            <div className="bg-red-50 p-6 rounded-2xl border border-red-200 shadow-sm"><span className="text-sm text-red-600">Stunting</span><p className="text-3xl font-black text-red-600">85</p></div>
+            <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200 shadow-sm"><span className="text-sm text-amber-600">Gizi Kurang</span><p className="text-3xl font-black text-amber-600">80</p></div>
+          </div>
 
-            <div className="divide-y divide-slate-100">
-              {aktivitasTerbaru.map((log, idx) => (
-                <div key={idx} className="py-4 first:pt-0 last:pb-0 flex justify-between items-center gap-4">
-                  <div>
-                    <h4 className="font-bold text-slate-700 text-sm">{log.nama} <span className="text-xs font-normal text-slate-400">({log.umur})</span></h4>
-                    <p className="text-xs text-slate-500 mt-0.5">{log.aksi}</p>
-                    <span className="text-[10px] text-slate-400 block mt-1">{log.waktu}</span>
-                  </div>
-                  <span className={`text-xs px-2.5 py-1 rounded-full font-semibold ${
-                    log.status === "Normal" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"
-                  }`}>
-                    {log.status}
-                  </span>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Tabel Prioritas */}
+            <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                <h3 className="font-bold text-slate-900">Perhatian Khusus</h3>
+                <div className="relative w-48">
+                  <IconSearch className="absolute left-2 top-2 text-slate-400" size={16} />
+                  <input placeholder="Cari..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full pl-8 pr-2 py-1 rounded-md border border-slate-300 text-xs" />
                 </div>
-              ))}
+              </div>
+              <table className="w-full text-left divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100">
+                {filteredData.map((anak) => (
+                  <tr key={anak.id} className="hover:bg-slate-50">
+                    <td className="p-3 font-bold">{anak.nama}</td>
+                    <td className="p-3 text-sm text-slate-500">{anak.posyandu}</td>
+                    <td className="p-3 text-right">
+                      <Link href={`/dashboard/detail/${anak.id}`} className="px-3 py-1 text-xs font-bold text-blue-600 bg-blue-50 rounded-md hover:bg-blue-600 hover:text-white transition">Detail</Link>
+                    </td>
+                  </tr>
+                ))}
+                </tbody>
+              </table>
             </div>
-          </div>
 
-          {/* Kolom Kanan (Kecil): Menu Terpintas Berdasarkan Gambar Sitemap-mu */}
-          <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
-            <div>
-              <h2 className="text-lg font-bold text-slate-800 mb-4">Navigasi Cepat</h2>
-              <div className="space-y-3">
-                <Link href="/dashboard/statistik" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-all font-medium text-sm">
-                  <div className="flex items-center gap-3">
-                    <IconActivity size={18} /> <span>Statistik Gizi Anak</span>
-                  </div>
-                  <span className="text-xs text-slate-400">→</span>
-                </Link>
-
-                <Link href="/dashboard/grafik" className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 transition-all font-medium text-sm">
-                  <div className="flex items-center gap-3">
-                    <IconActivity size={18} /> <span>Grafik Pertumbuhan KMS</span>
-                  </div>
-                  <span className="text-xs text-slate-400">→</span>
-                </Link>
-
-                <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 text-slate-400 font-medium text-sm opacity-60">
-                  <div className="flex items-center gap-3">
-                    <IconBook size={18} /> <span>Artikel Edukasi (Segera)</span>
-                  </div>
+            {/* Aktivitas Sistem */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+              <h3 className="font-bold text-slate-900 mb-4">Aktivitas Sistem</h3>
+              <div className="flex gap-4 mb-4">
+                <div className="bg-blue-100 p-2 rounded-full h-fit"><IconStethoscope size={18} className="text-blue-600"/></div>
+                <div>
+                  <p className="text-sm font-semibold text-slate-800">Data pengukuran ditambahkan</p>
+                  <p className="text-xs text-slate-400 mt-1 flex items-center gap-1"><IconClock size={14}/> 2 Jam yang lalu</p>
                 </div>
               </div>
             </div>
-
-            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-3 text-xs text-slate-400">
-              <IconUser size={14} /> Logged in as Operator Posyandu
-            </div>
           </div>
-
         </div>
+      )}
 
-      </div>
-    </div>
+     {activeTab === 'grafik' && (
+  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+    <h3 className="text-lg font-bold text-slate-900 mb-6">Grafik Kasus Stunting di Balikpapan (2026)</h3>
+    <div className="flex items-end gap-4 h-64 w-full border-b border-l border-slate-200 p-4 pt-0">
+      {[
+        { bln: 'Jan', val: 95 }, { bln: 'Feb', val: 90 }, { bln: 'Mar', val: 88 }, 
+        { bln: 'Apr', val: 88 }, { bln: 'Mei', val: 86 }, { bln: 'Jun', val: 85 }
+      ].map((data, index) => (
+        <div key={index} className="flex-1 flex flex-col items-center justify-end gap-2 h-full group relative">
+          {/* Teks angka yang muncul saat di-hover */}
+          <span className="absolute -top-8 text-xs font-bold text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            {data.val}
+          </span>
+          
+          {/* Batang Grafik dengan cursor-pointer */}
+          <div 
+            className="w-full bg-blue-500 rounded-t-sm transition-all group-hover:bg-blue-600 cursor-pointer" 
+            style={{ height: `${data.val}%` }}
+          ></div>
+          
+          <span className="text-xs font-medium text-slate-400">{data.bln}</span>
+        </div>
+            ))}
+          </div>
+          <p className="text-xs text-center text-slate-400 mt-6 italic">*Arahkan kursor ke batang grafik untuk melihat detail angka.</p>
+        </div>
+        )}
+    </main>
   );
 }

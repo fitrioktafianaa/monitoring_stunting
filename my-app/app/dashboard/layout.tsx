@@ -1,96 +1,73 @@
-"use client";
+"use client"; // Kita butuh ini karena menggunakan hook usePathname
 
-import React, { useState } from "react";
-import Link from "next/link";
-import { Baby, ChevronDown, BarChart3, LineChart, Home, LogOut } from "lucide-react";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { 
+  IconActivity, 
+  IconLayoutDashboard, 
+  IconBabyCarriage, 
+  IconBook, 
+  IconUserCircle 
+} from '@tabler/icons-react';
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  // State untuk mengontrol dropdown menu "Monitoring"
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  // Mengambil URL yang sedang aktif (misal: "/dashboard" atau "/data-anak")
+  const pathname = usePathname();
+
+  // Fungsi untuk memberi gaya berbeda jika menu sedang diklik/aktif
+  const navItemClass = (path: string) => `
+    flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors
+    ${pathname === path 
+      ? 'text-blue-600 bg-blue-50 font-bold' 
+      : 'text-slate-500 hover:text-blue-600 hover:bg-slate-50 font-semibold'
+    }
+  `;
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      {/* NAVBAR ATAS (Gaya seperti SIAM Universitas Mulia) */}
-      <nav className="bg-slate-900 text-white shadow-md relative z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            
-            {/* Logo & Judul Aplikasi */}
-            <div className="flex items-center gap-3">
-              <div className="bg-blue-600 p-2 rounded-lg text-white">
-                <Baby size={20} />
-              </div>
-              <span className="font-bold text-lg tracking-wider hidden sm:block">
-                MONITORING STUNTING
-              </span>
+    <div className="min-h-screen bg-slate-50 font-[sans-serif] text-slate-800">
+      
+      {/* GLOBAL NAVBAR */}
+      <div className="sticky top-0 z-50 w-full pt-4 px-4 md:px-6 transition-all duration-300">
+        <nav className="mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between p-4 bg-white/90 backdrop-blur-md shadow-sm border border-slate-200 rounded-2xl gap-4 md:gap-0">
+          
+          {/* Kiri: Logo */}
+          <div className="flex items-center gap-2">
+            <div className="p-2 bg-blue-500 rounded-xl text-white shadow-sm shadow-blue-200">
+              <IconActivity size={24} stroke={2.5} />
             </div>
-
-            {/* Menu Navigasi Utama */}
-            <div className="flex items-center gap-2 h-full">
-              
-              <Link 
-                href="/dashboard" 
-                className="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium transition-colors"
-              >
-                <Home size={16} /> DASHBOARD
-              </Link>
-
-              {/* Menu Dropdown yang Beranak ke Bawah */}
-              <div 
-                className="relative h-full flex items-center"
-                onMouseEnter={() => setIsDropdownOpen(true)}
-                onMouseLeave={() => setIsDropdownOpen(false)}
-              >
-                <button 
-                  className="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium transition-colors focus:outline-none"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                >
-                  📊 FITUR MONITORING <ChevronDown size={14} />
-                </button>
-
-                {/* Anak Menu Dropdown */}
-                {isDropdownOpen && (
-                  <div className="absolute top-[calc(100%-8px)] left-0 w-52 bg-slate-800 rounded-md shadow-xl py-2 border border-slate-700 animate-in fade-in slide-in-from-top-5 duration-200">
-                    <Link 
-                      href="/dashboard/statistik"
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-200 hover:bg-blue-600 hover:text-white transition-colors"
-                    >
-                      <BarChart3 size={16} /> Statistik Data
-                    </Link>
-                    <Link 
-                      href="/dashboard/grafik"
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-200 hover:bg-blue-600 hover:text-white transition-colors"
-                    >
-                      <LineChart size={16} /> Grafik Pertumbuhan
-                    </Link>
-                  </div>
-                )}
-              </div>
-
-            </div>
-
-            {/* Tombol Logout */}
-            <div>
-              <Link 
-                href="/" 
-                className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-red-600 hover:bg-red-700 text-xs font-semibold uppercase transition-colors"
-              >
-                <LogOut size={14} /> Keluar
-              </Link>
-            </div>
-
+            <span className="text-lg font-bold text-slate-900 tracking-tight">
+              Monitoring <span className="text-blue-500">Stunting</span>
+            </span>
           </div>
-        </div>
-      </nav>
 
-      {/* Konten Halaman akan otomatis muncul di bawah sini */}
-      <main className="flex-1">
+          {/* Kanan: Menu Navigasi Dinamis */}
+          <div className="flex items-center gap-2 md:gap-6 text-sm">
+            <Link href="/dashboard" className={navItemClass('/dashboard')}>
+              <IconLayoutDashboard size={18} />
+              <span className="hidden md:inline">Dashboard</span>
+            </Link>
+            <Link href="/data_anak" className={navItemClass('/data_anak')}>
+              <IconBabyCarriage size={18} />
+              <span className="hidden md:inline">Data Anak</span>
+            </Link>
+            <Link href="/edukasi" className={navItemClass('/edukasi')}>
+              <IconBook size={18} />
+              <span className="hidden md:inline">Edukasi</span>
+            </Link>
+            <Link href="/profil" className={navItemClass('/profil')}>
+              <IconUserCircle size={18} />
+              <span className="hidden md:inline">Profil</span>
+            </Link>
+          </div>
+
+        </nav>
+      </div>
+
+      {/* ISI KONTEN (page.tsx akan dirender di dalam {children} ini) */}
+      <div className="pb-12">
         {children}
-      </main>
+      </div>
+
     </div>
   );
 }

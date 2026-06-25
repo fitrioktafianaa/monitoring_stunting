@@ -1,112 +1,111 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import * as z from "zod"
-import { IconLock, IconMail, IconBrandGoogle, IconBrandWhatsapp } from "@tabler/icons-react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import * as z from "zod";
+import { IconLock, IconMail, IconEye, IconEyeOff, IconBrandWhatsapp } from "@tabler/icons-react";
 
+// Schema validasi
 const loginSchema = z.object({
   email: z.string().email({ message: "Format email salah!" }),
   password: z.string().min(6, { message: "Password minimal 6 karakter!" }),
-})
+});
 
-export default function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
+const registerSchema = z.object({
+  fullName: z.string().min(3, { message: "Nama lengkap minimal 3 karakter!" }),
+  nip: z.string().min(10, { message: "NIK/NIP harus valid!" }),
+  instansi: z.string().min(3, { message: "Nama instansi wajib diisi!" }),
+  email: z.string().email({ message: "Format email salah!" }),
+  whatsapp: z.string().min(10, { message: "Nomor WA minimal 10 digit!" }),
+  password: z.string().min(6, { message: "Password minimal 6 karakter!" }),
+});
+
+export default function AuthPage() {
+  const router = useRouter();
+  const [isLogin, setIsLogin] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  
+  const [formData, setFormData] = useState({ 
+    fullName: "", nip: "", instansi: "", email: "", whatsapp: "", password: "" 
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setErrors({})
-
-    const result = loginSchema.safeParse({ email, password })
+    e.preventDefault();
+    setErrors({});
+    
+    const schema = isLogin ? loginSchema : registerSchema;
+    const result = schema.safeParse(formData);
 
     if (!result.success) {
-      const formattedErrors: { email?: string; password?: string } = {}
-      result.error.issues.forEach((issue) => {
-        if (issue.path[0] === "email") formattedErrors.email = issue.message
-        if (issue.path[0] === "password") formattedErrors.password = issue.message
-      })
-      setErrors(formattedErrors)
+      const fieldErrors: Record<string, string> = {};
+      result.error.issues.forEach((issue) => { fieldErrors[issue.path[0] as string] = issue.message; });
+      setErrors(fieldErrors);
     } else {
-      console.log("Data Login:", result.data)
-      alert("Login berhasil!")
-      
-            setEmail("")
-            setPassword("")
+      if (isLogin) {
+        router.push("/dashboard");
+      } else {
+        alert("Pendaftaran berhasil! Silakan masuk.");
+        setIsLogin(true);
+        setFormData({ fullName: "", nip: "", instansi: "", email: "", whatsapp: "", password: "" });
+      }
     }
-  }
+  };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-slate-50">
-      <div className="w-full max-w-md bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-        
-        {/* Header Section */}
-        <div className="flex flex-col justify-center items-center mb-6 gap-1">
-          <h2 className="text-xl font-bold text-slate-800">Monitoring Stunting</h2>
-          <p className="text-sm text-slate-500 font-sans">Silakan masuk ke akun Anda</p>
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 font-[sans-serif] p-4">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+        <div className="flex flex-col items-center mb-6 gap-1">
+          <h2 className="text-2xl font-extrabold text-slate-800">Monitoring Stunting</h2>
+          <p className="text-sm text-slate-500">{isLogin ? "Silakan masuk ke akun Anda" : "Registrasi Akun Baru"}</p>
         </div>
 
-        {/* Form Section */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          
-          {/* Input Email */}
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-slate-700">Email</label>
-            <div className="relative flex items-center">
-              <IconMail className="absolute left-3 h-5 w-5 text-slate-400" />
-              <input 
-                type="text" 
-                placeholder="nama@email.com" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-md border border-slate-300 bg-white py-2 pl-10 pr-3 text-sm font-bold placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 text-slate-800"
-              />
-            </div>
-            {errors.email && <p className="text-xs text-red-500 font-sans">{errors.email}</p>}
-          </div>
+          {!isLogin && (
+            <>
+              <input name="fullName" value={formData.fullName} placeholder="Nama Lengkap" onChange={handleChange} className="w-full rounded-md border border-slate-300 py-2 px-3 text-sm outline-none" />
+              {errors.fullName && <p className="text-[10px] text-red-500 -mt-3">{errors.fullName}</p>}
+              
+              <input name="nip" value={formData.nip} placeholder="NIK / NIP" onChange={handleChange} className="w-full rounded-md border border-slate-300 py-2 px-3 text-sm outline-none" />
+              {errors.nip && <p className="text-[10px] text-red-500 -mt-3">{errors.nip}</p>}
+              
+              <input name="instansi" value={formData.instansi} placeholder="Instansi / Posyandu" onChange={handleChange} className="w-full rounded-md border border-slate-300 py-2 px-3 text-sm outline-none" />
+              {errors.instansi && <p className="text-[10px] text-red-500 -mt-3">{errors.instansi}</p>}
+              
+              <input name="whatsapp" value={formData.whatsapp} placeholder="Nomor WhatsApp" onChange={handleChange} className="w-full rounded-md border border-slate-300 py-2 px-3 text-sm outline-none" />
+              {errors.whatsapp && <p className="text-[10px] text-red-500 -mt-3">{errors.whatsapp}</p>}
+            </>
+          )}
 
-          {/* Input Password */}
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-slate-700">Password</label>
-            <div className="relative flex items-center">
-              <IconLock className="absolute left-3 h-5 w-5 text-slate-400" />
-              <input 
-                type="password" 
-                placeholder="••••••••" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-md border border-slate-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 text-slate-800"
-              />
-            </div>
-            {errors.password && <p className="text-xs text-red-500 font-sans">{errors.password}</p>}
+          <div className="relative flex items-center">
+            <IconMail className="absolute left-3 h-5 w-5 text-slate-400" />
+            <input name="email" value={formData.email} placeholder="Email" onChange={handleChange} className="w-full rounded-md border border-slate-300 py-2 pl-10 pr-3 text-sm outline-none" />
           </div>
+          {errors.email && <p className="text-[10px] text-red-500 -mt-3">{errors.email}</p>}
 
-          {/* Button Submit */}
-          <button 
-            type="submit" 
-            className="w-full bg-blue-600 py-2 rounded-md text-sm font-medium text-white transition hover:bg-blue-700"
-          >
-            Masuk
+          <div className="relative flex items-center">
+            <IconLock className="absolute left-3 h-5 w-5 text-slate-400" />
+            <input type={showPassword ? "text" : "password"} name="password" value={formData.password} placeholder="Password" onChange={handleChange} className="w-full rounded-md border border-slate-300 py-2 pl-10 pr-10 text-sm outline-none" />
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 text-slate-400">
+              {showPassword ? <IconEyeOff size={18}/> : <IconEye size={18}/>}
+            </button>
+          </div>
+          {errors.password && <p className="text-[10px] text-red-500 -mt-3">{errors.password}</p>}
+
+          <button type="submit" className="w-full bg-blue-600 py-2 rounded-md text-sm font-semibold text-white hover:bg-blue-700 transition">
+            {isLogin ? "Masuk" : "Daftar"}
           </button>
         </form>
 
-        {/* Divider */}
-        <div className="relative flex items-center justify-center my-4 text-xs text-slate-400 uppercase">
-          <span className="relative z-10 bg-white px-2">atau</span>
-          <div className="absolute inset-0 top-2 border-t border-slate-200"></div>
-        </div>
-
-        {/* Google Login Button */}
-        <button 
-          type="button" 
-          onClick={() => alert('Whatsapp Sign In')}
-          className="flex w-full items-center justify-center rounded-md border border-slate-300 bg-white py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
-        >
-         <IconBrandWhatsapp className="mr-2 h-4 w-4 text-green-500" />
-          Masuk dengan Nomor Handphone
+        <button onClick={() => setIsLogin(!isLogin)} className="w-full mt-6 text-xs text-slate-500 hover:text-blue-600 font-bold uppercase text-center">
+          {isLogin ? "Belum punya akun? Daftar" : "Sudah punya akun? Masuk"}
         </button>
 
       </div>
     </div>
-  )
+  );
 }
