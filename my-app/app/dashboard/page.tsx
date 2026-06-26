@@ -28,7 +28,7 @@ export default function DashboardPage() {
     <main className="mx-auto max-w-6xl px-4 md:px-6 mt-8">
       
       <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900">Ringkasan Pemantauan</h1>
+        <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Ringkasan Pemantauan</h1>
         <p className="text-slate-500 mt-1">Pantau statistik status gizi dan grafik pertumbuhan balita.</p>
       </div>
 

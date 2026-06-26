@@ -35,47 +35,14 @@ export default function DataAnakPage() {
     /* Wrapper Utama (Ini yang bikin font dan backgroundnya sama persis!) */
     <div className="min-h-screen bg-slate-50 font-[sans-serif] text-slate-800 pb-12">
       
-      {/* GLOBAL NAVBAR */}
-      <div className="sticky top-0 z-50 w-full pt-4 px-4 md:px-6 transition-all duration-300">
-        <nav className="mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between p-4 bg-white/90 backdrop-blur-md shadow-sm border border-slate-200 rounded-2xl gap-4 md:gap-0">
-          
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-blue-500 rounded-xl text-white shadow-sm shadow-blue-200">
-              <IconActivity size={24} stroke={2.5} />
-            </div>
-            <span className="text-lg font-bold text-slate-900 tracking-tight">
-              Monitoring<span className="text-blue-500">Stunting</span>
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 md:gap-6 text-sm">
-            <Link href="/dashboard" className={navItemClass('/dashboard')}>
-              <IconLayoutDashboard size={18} />
-              <span className="hidden md:inline">Dashboard</span>
-            </Link>
-            <Link href="/data_anak" className={navItemClass('/data_anak')}>
-              <IconBabyCarriage size={18} />
-              <span className="hidden md:inline">Data Anak</span>
-            </Link>
-            <Link href="/edukasi" className={navItemClass('/edukasi')}>
-              <IconBook size={18} />
-              <span className="hidden md:inline">Edukasi</span>
-            </Link>
-            <Link href="/profil" className={navItemClass('/profil')}>
-              <IconUserCircle size={18} />
-              <span className="hidden md:inline">Profil</span>
-            </Link>
-          </div>
-
-        </nav>
-      </div>
+      
 
       {/* KONTEN UTAMA DATA ANAK */}
       <main className="mx-auto max-w-6xl px-4 md:px-6 mt-8">
         
         {/* Header Halaman */}
         <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900">Manajemen Data Anak</h1>
+          <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Manajemen Data Anak</h1>
           <p className="text-slate-500 mt-1">Kelola data identitas balita, input hasil posyandu, dan pantau status gizi.</p>
         </div>
 
