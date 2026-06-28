@@ -90,6 +90,7 @@ export default function DataAnakPage() {
           </button>
         </div>
 
+
         {/* KONTEN: DATA BALITA */}
         {activeTab === 'data' && (
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
@@ -98,7 +99,7 @@ export default function DataAnakPage() {
                 <IconSearch size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input type="text" placeholder="Cari nama balita..." className="w-full pl-10 pr-4 py-2 text-sm border border-slate-200 rounded-xl outline-none" />
               </div>
-              <Link href="/data_anak/tambah" className="w-full md:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
+              <Link href="/admin/data_anak/tambah" className="w-full md:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
                 <IconPlus size={18} /> Tambah Data Balita
               </Link>
             </div>
@@ -121,7 +122,7 @@ export default function DataAnakPage() {
                       <td className="p-4">{anak.ibu}</td>
                       <td className="p-4">{anak.jk}</td>
                       <td className="p-4 flex justify-end gap-2">
-                        <button onClick={() => router.push(`/data_anak/edit/${anak.id}`)} className="p-1.5 text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white rounded-lg transition cursor-pointer">
+                        <button onClick={() => router.push(`/admin/data_anak/edit/${anak.id}`)} className="p-1.5 text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white rounded-lg transition cursor-pointer">
                           <IconEdit size={18}/>
                         </button>
                         <button onClick={() => handleDelete(anak.id)} className="p-1.5 text-red-600 bg-red-50 hover:bg-red-600 hover:text-white rounded-lg transition cursor-pointer">
@@ -217,44 +218,83 @@ export default function DataAnakPage() {
           </div>
         )}
 
-        {/* KONTEN 3: RIWAYAT PENGUKURAN */}
+        {/* KONTEN: RIWAYAT PENGUKURAN (Versi Tampilkan Semua) */}
         {activeTab === 'riwayat' && (
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden p-6 flex flex-col items-center justify-center text-center py-20">
-             <IconHistory size={48} className="text-slate-300 mb-4" stroke={1.5} />
-             <h3 className="font-bold text-slate-900 text-lg">Pilih Balita Terlebih Dahulu</h3>
-             <p className="text-sm text-slate-500 mt-2 max-w-sm">Gunakan fitur pencarian di tab "Data Balita" atau pilih anak untuk melihat riwayat kurva pertumbuhan bulanan mereka di sini.</p>
-             <button onClick={() => setActiveTab('data')} className="mt-6 text-sm font-bold text-blue-600 bg-blue-50 px-5 py-2 rounded-lg hover:bg-blue-100 transition cursor-pointer">
-               Kembali ke Data Balita
-             </button>
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="p-6 border-b border-slate-100">
+              <h3 className="font-bold text-slate-900">Seluruh Riwayat Pengukuran</h3>
+              <p className="text-xs text-slate-500 mt-1">Daftar lengkap hasil pengukuran dari seluruh balita yang terdaftar.</p>
+            </div>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="text-xs font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                    <th className="p-4">Nama Balita</th>
+                    <th className="p-4">Tanggal</th>
+                    <th className="p-4">Berat (kg)</th>
+                    <th className="p-4">Tinggi (cm)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm text-slate-600 divide-y divide-slate-100">
+                  {/* Contoh data: ini bisa kamu ganti dengan data dari database nanti */}
+                  <tr className="hover:bg-slate-50">
+                    <td className="p-4 font-bold text-slate-800">Dina Mariana</td>
+                    <td className="p-4">25 Juni 2026</td>
+                    <td className="p-4">10.2</td>
+                    <td className="p-4">81.5</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50">
+                    <td className="p-4 font-bold text-slate-800">Bagas Dwi</td>
+                    <td className="p-4">26 Juni 2026</td>
+                    <td className="p-4">12.5</td>
+                    <td className="p-4">90.2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 
         {/* KONTEN 4: STATUS STUNTING */}
-        {activeTab === 'status' && (
-          <div className="w-full">
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-              <h3 className="font-bold text-slate-900 mb-4 border-b border-slate-100 pb-3">
-                Kalkulasi Z-Score Kemenkes
-              </h3>
-              <div className="space-y-4">
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                  <p className="text-xs text-slate-500 font-semibold mb-1">Status Gizi (Berat Badan / Umur)</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-slate-900">Z-Score: -1.2</span>
-                    <span className="text-xs font-bold text-emerald-600 bg-emerald-100 px-3 py-1 rounded-full">Gizi Baik (Normal)</span>
-                  </div>
-                </div>
-                <div className="p-4 bg-red-50/50 rounded-xl border border-red-100">
-                  <p className="text-xs text-slate-500 font-semibold mb-1">Status Stunting (Tinggi Badan / Umur)</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-red-600">Z-Score: -3.1</span>
-                    <span className="text-xs font-bold text-red-600 bg-red-100 px-3 py-1 rounded-full">Sangat Pendek (Stunting)</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-xs text-slate-400 mt-6 leading-relaxed">
-                *Perhitungan di atas menggunakan standar deviasi WHO 2006. Data sampel ditunjukkan untuk balita a.n <strong>Dina Mariana</strong> pada pengukuran terakhir bulan Juni 2026.
-              </p>
+       {activeTab === 'status' && (
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="p-6 border-b border-slate-100">
+              <h3 className="font-bold text-slate-900">Status Stunting Seluruh Balita</h3>
+              <p className="text-xs text-slate-500 mt-1">Data status gizi berdasarkan pengukuran terakhir.</p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="text-xs font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                    <th className="p-4">Nama Balita</th>
+                    <th className="p-4 text-center">Z-Score (BB/U)</th>
+                    <th className="p-4 text-center">Status BB/U</th>
+                    <th className="p-4 text-center">Z-Score (TB/U)</th>
+                    <th className="p-4 text-center">Status TB/U</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm text-slate-600 divide-y divide-slate-100">
+                  {dataBalita.map((anak) => (
+                    <tr key={anak.id} className="hover:bg-slate-50 transition-colors">
+                      <td className="p-4 font-bold text-slate-800">{anak.nama}</td>
+                      <td className="p-4 text-center">-1.2</td>
+                      <td className="p-4 text-center">
+                        <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+                          Normal
+                        </span>
+                      </td>
+                      <td className="p-4 text-center text-red-600 font-bold">-3.1</td>
+                      <td className="p-4 text-center">
+                        <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2.5 py-1 rounded-full border border-red-100">
+                          Stunting
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         )}

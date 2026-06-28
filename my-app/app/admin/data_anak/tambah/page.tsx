@@ -28,18 +28,18 @@ export default function TambahDataAnakPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert("Data balita berhasil ditambahkan!");
-    router.push('/data_anak'); // Kembali ke halaman sebelumnya setelah simpan
+    router.push('/admin/data_anak'); // Kembali ke halaman sebelumnya setelah simpan
   };
 
   return (
     <div className="min-h-screen bg-slate-50 font-[sans-serif] text-slate-800 pb-12">
-      
+    
 
       {/* KONTEN UTAMA FORM */}
       <main className="mx-auto max-w-3xl px-4 md:px-6 mt-8">
         
         {/* Tombol Kembali */}
-        <Link href="/data_anak" className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors mb-6">
+        <Link href="/admin/data_anak" className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors mb-6">
           <IconArrowLeft size={18} />
           Kembali ke Data Anak
         </Link>

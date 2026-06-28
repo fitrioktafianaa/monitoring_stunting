@@ -21,7 +21,7 @@ export default function EditAnakPage({ params }: { params: Promise<{ id: string 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert(`Data anak ID ${id} berhasil diupdate!`);
-    router.push('/data_anak');
+    router.push('/admin/data_anak');
   };
 
   return (

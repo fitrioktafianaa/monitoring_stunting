@@ -69,9 +69,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <Link href="/admin/data_anak" className={navItemClass('/admin/data_anak')}>
                       <IconBabyCarriage size={18} /> Data Anak
                     </Link>
-                    <Link href="/admin/edukasi" className={navItemClass('/admin/edukasi')}>
-                      <IconBook size={18} /> Edukasi
-                    </Link>
                     <Link href="/admin/profil" className={navItemClass('/admin/profil')}>
                       <IconUserCircle size={18} /> Profil
                     </Link>
