@@ -13,7 +13,6 @@ export default function EdukasiPage() {
       kategori: "Info Kesehatan",
       ringkasan: "Stunting adalah gangguan pertumbuhan akibat gizi buruk, infeksi berulang, dan stimulasi psikososial yang kurang memadai sejak dalam kandungan.",
       bacaWaktu: "5 mnt baca",
-      icon: "🥦"
     },
     {
       id: 2,
@@ -21,7 +20,6 @@ export default function EdukasiPage() {
       kategori: "Nutrisi & Gizi",
       ringkasan: "Protein hewani seperti telur, ikan, dan daging terbukti sangat efektif menstimulasi pertumbuhan linear tinggi badan anak.",
       bacaWaktu: "4 mnt baca",
-      icon: "🍳"
     },
     {
       id: 3,
@@ -29,7 +27,6 @@ export default function EdukasiPage() {
       kategori: "Pola Asuh",
       ringkasan: "Selain nutrisi, kebersihan air serta sanitasi lingkungan memegang peran besar dalam menjaga sistem imun balita agar terhindar dari infeksi.",
       bacaWaktu: "6 mnt baca",
-      icon: "🏡"
     }
   ];
 
@@ -75,7 +72,7 @@ export default function EdukasiPage() {
                     <span className="text-xs font-semibold bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full">{artikel.kategori}</span>
                     <span className="text-xs text-slate-400">{artikel.bacaWaktu}</span>
                   </div>
-                  <div className="text-3xl mb-3">{artikel.icon}</div>
+                  <div className="text-3xl mb-3"></div>
                   <h3 className="font-bold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-2">{artikel.judul}</h3>
                   <p className="text-xs text-slate-500 mt-2 line-clamp-3 leading-relaxed">{artikel.ringkasan}</p>
                 </div>
@@ -95,13 +92,13 @@ export default function EdukasiPage() {
           </div>
 
           <div className="space-y-3">
-            {daftarFaq.map((faq, index) => {
+            {daftarFaq.map((faq, index) => {  
               const isOpen = openFaq === index;
               return (
                 <div key={index} className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all">
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : index)}
-                    className="w-full flex items-center justify-between p-5 text-left font-semibold text-sm md:text-base text-slate-700 hover:bg-slate-50 focus:outline-none"
+                    className="w-full flex items-center justify-between p-5 text-left font-semibold text-sm md:text-base text-slate-700 hover:bg-slate-50 focus:outline-none cursor pointer"
                   >
                     <span>{faq.pertanyaan}</span>
                     {isOpen ? <IconChevronUp size={18} className="text-slate-400" /> : <IconChevronDown size={18} className="text-slate-400" />}
