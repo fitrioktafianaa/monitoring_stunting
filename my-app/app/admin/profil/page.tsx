@@ -15,9 +15,9 @@ export default function ProfilPage() {
   const router = useRouter();
   
   // State data akun
-  const [nama, setNama] = useState("Fiaa & Pitri");
-  const [email, setEmail] = useState("operator.posyandu@gmail.com");
-  const [posyandu, setPosyandu] = useState("Posyandu Melati Indah");
+  const [nama, setNama] = useState("Admin");
+  const [email, setEmail] = useState("operator.puskesmas@gmail.com");
+  const [posyandu, setPosyandu] = useState("Puskesmas Manggar");
   const [password, setPassword] = useState("********");
 
   const handleLogout = () => {
@@ -81,9 +81,9 @@ export default function ProfilPage() {
             </button>
 
             {/* CARD BANTUAN TEKNIS (Posisinya pas di bawah tombol keluar) */}
-            <div className="bg-amber-50/60 border border-amber-200/70 rounded-3xl p-5 space-y-3">
-              <div className="flex items-center gap-2 text-amber-800 font-bold text-xs uppercase tracking-wider">
-                ⚠️ Butuh Bantuan Teknis?
+            <div className="bg-blue-50/60 border border-blue-200/70 rounded-3xl p-5 space-y-3">
+              <div className="flex items-center gap-2 text-blue-800 font-bold text-xs uppercase tracking-wider">
+                Butuh Bantuan Teknis?
               </div>
               <p className="text-[11px] text-slate-600 leading-relaxed">
                 Jika terjadi kesalahan sistem atau kendala sinkronisasi data anak, silakan hubungi Admin Puskesmas.
@@ -91,7 +91,7 @@ export default function ProfilPage() {
               <a 
                 href="https://wa.me/628123456789" 
                 target="_blank" 
-                className="w-full block text-center bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 rounded-xl text-xs transition-colors shadow-sm"
+                className="w-full block text-center bg-blue-500 hover:bg-amber-600 text-white font-semibold py-2 rounded-xl text-xs transition-colors shadow-sm"
               >
                 Hubungi via WhatsApp
               </a>

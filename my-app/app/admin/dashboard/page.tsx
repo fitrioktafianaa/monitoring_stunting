@@ -67,7 +67,7 @@ export default function DashboardPage() {
                     <td className="p-3 font-bold">{anak.nama}</td>
                     <td className="p-3 text-sm text-slate-500">{anak.posyandu}</td>
                     <td className="p-3 text-right">
-                      <Link href={`/dashboard/detail/${anak.id}`} className="px-3 py-1 text-xs font-bold text-blue-600 bg-blue-50 rounded-md hover:bg-blue-600 hover:text-white transition">Detail</Link>
+                      <Link href={`/admin/dashboard/detail/${anak.id}`} className="px-3 py-1 text-xs font-bold text-blue-600 bg-blue-50 rounded-md hover:bg-blue-600 hover:text-white transition">Detail</Link>
                     </td>
                   </tr>
                 ))}
