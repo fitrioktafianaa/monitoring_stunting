@@ -40,7 +40,7 @@ export default function DetailAnakPage() {
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-8 bg-slate-50 min-h-screen">
-      <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-blue-600 mb-6 cursor-pointer">
+      <Link href="/admin/dashboard" className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-blue-600 mb-6 cursor-pointer">
         <IconArrowLeft size={18} /> Kembali ke Dashboard
       </Link>
 
