@@ -19,12 +19,13 @@ export default function ProfilParent() {
   // State untuk kontrol mode edit
   const [isEditing, setIsEditing] = useState(false);
 
-  // State untuk menyimpan data profil secara dinamis
-  const [nama, setNama] = useState("Siti Rahma");
-  const [email, setEmail] = useState("siti.rahma@email.com");
-  const [telepon, setTelepon] = useState("0812 3456 7890");
-  const [alamat, setAlamat] = useState("Jl. Mawar No. 12, Balikpapan");
-  const [anak, setAnak] = useState("Dina Mariana");
+  // State untuk menyimpan data profil secara dinamis (load dari localStorage)
+  const saved = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('profilParent') || 'null') : null;
+  const [nama, setNama] = useState(saved?.nama ?? "Siti Rahma");
+  const [email, setEmail] = useState(saved?.email ?? "siti.rahma@email.com");
+  const [telepon, setTelepon] = useState(saved?.telepon ?? "0812 3456 7890");
+  const [alamat, setAlamat] = useState(saved?.alamat ?? "Jl. Mawar No. 12, Balikpapan");
+  const [anak, setAnak] = useState(saved?.anak ?? "Dina Mariana");
 
   // State cadangan (untuk mengembalikan data jika user membatalkan edit)
   const [tempData, setTempData] = useState({ nama, email, telepon, alamat });
@@ -38,6 +39,7 @@ export default function ProfilParent() {
   // Fungsi simpan perubahan
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    localStorage.setItem('profilParent', JSON.stringify({ nama, email, telepon, alamat, anak }));
     setIsEditing(false);
     alert("Profil Bunda berhasil diperbarui!");
   };

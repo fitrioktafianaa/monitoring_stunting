@@ -8,14 +8,28 @@ import { IconArrowLeft, IconDeviceFloppy } from '@tabler/icons-react';
 export default function EditAnakPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   
-  // 3. Unpack params menggunakan React.use()
   const { id } = use(params);
 
+  const dataAnak: Record<string, { nama: string; nik: string; lahir: string; ibu: string }> = {
+    "1": { nama: "Dina Mariana", nik: "6472011201240001", lahir: "2024-01-12", ibu: "Siti Rahma" },
+    "2": { nama: "Bagas Dwi", nik: "6472010507230002", lahir: "2023-07-05", ibu: "Ayu Lestari" },
+    "3": { nama: "Siti Aisyah", nik: "6472012003240003", lahir: "2024-03-20", ibu: "Rina Wati" },
+    "4": { nama: "Muhammad Rizky", nik: "6472011409230004", lahir: "2023-09-14", ibu: "Dewi Kartika" },
+    "5": { nama: "Putri Ramadhani", nik: "6472010804240005", lahir: "2024-04-08", ibu: "Eka Susanti" },
+    "6": { nama: "Ahmad Fauzi", nik: "6472012211230006", lahir: "2023-11-22", ibu: "Nurul Hidayah" },
+    "7": { nama: "Aisyah Putri", nik: "6472013006240007", lahir: "2024-06-30", ibu: "Maya Sari" },
+    "8": { nama: "Bintang Pratama", nik: "6472011102240008", lahir: "2024-02-11", ibu: "Lestari Ningrum" },
+    "9": { nama: "Citra Dewi", nik: "6472010308230009", lahir: "2023-08-03", ibu: "Harmini" },
+    "10": { nama: "Dani Kurniawan", nik: "6472011705240010", lahir: "2024-05-17", ibu: "Suci Rahayu" },
+  };
+
+  const data = dataAnak[id] || { nama: "", nik: "", lahir: "", ibu: "" };
+
   const [formData, setFormData] = useState({
-    nama: "Dina Mariana",
-    nik: "1234567890123456",
-    lahir: "2024-01-12",
-    ibu: "Siti Rahma",
+    nama: data.nama,
+    nik: data.nik,
+    lahir: data.lahir,
+    ibu: data.ibu,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
