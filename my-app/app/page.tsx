@@ -1,7 +1,67 @@
 import Link from "next/link"
-import { IconLayoutDashboard, IconActivity, IconUsers, IconBook } from "@tabler/icons-react"
+import { IconLayoutDashboard, IconActivity, IconUsers, IconBook, IconExternalLink, IconBook2, IconHeartbeat, IconChefHat, IconLeaf, IconStethoscope, IconBrandYoutube, IconRuler2, IconBrain, IconShieldCheck } from "@tabler/icons-react"
 
 export default function LandingPage() {
+  const accentMap: Record<string, { bg: string; text: string; iconBg: string; iconHover: string; tagBg: string; gradient: string; hoverText: string }> = {
+    emerald: { bg: "bg-emerald-50", text: "text-emerald-600", iconBg: "bg-emerald-50", iconHover: "hover:bg-emerald-600 hover:text-white", tagBg: "bg-emerald-50 text-emerald-600", gradient: "from-emerald-400 to-emerald-600", hoverText: "group-hover:text-emerald-600" },
+    blue: { bg: "bg-blue-50", text: "text-blue-600", iconBg: "bg-blue-50", iconHover: "hover:bg-blue-600 hover:text-white", tagBg: "bg-blue-50 text-blue-600", gradient: "from-blue-400 to-blue-600", hoverText: "group-hover:text-blue-600" },
+    amber: { bg: "bg-amber-50", text: "text-amber-600", iconBg: "bg-amber-50", iconHover: "hover:bg-amber-600 hover:text-white", tagBg: "bg-amber-50 text-amber-600", gradient: "from-amber-400 to-amber-600", hoverText: "group-hover:text-amber-600" },
+    rose: { bg: "bg-rose-50", text: "text-rose-600", iconBg: "bg-rose-50", iconHover: "hover:bg-rose-600 hover:text-white", tagBg: "bg-rose-50 text-rose-600", gradient: "from-rose-400 to-rose-600", hoverText: "group-hover:text-rose-600" },
+    violet: { bg: "bg-violet-50", text: "text-violet-600", iconBg: "bg-violet-50", iconHover: "hover:bg-violet-600 hover:text-white", tagBg: "bg-violet-50 text-violet-600", gradient: "from-violet-400 to-violet-600", hoverText: "group-hover:text-violet-600" },
+    sky: { bg: "bg-sky-50", text: "text-sky-600", iconBg: "bg-sky-50", iconHover: "hover:bg-sky-600 hover:text-white", tagBg: "bg-sky-50 text-sky-600", gradient: "from-sky-400 to-sky-600", hoverText: "group-hover:text-sky-600" },
+  };
+
+  const artikel = [
+    {
+      title: "Panduan Lengkap Gizi Seimbang untuk Balita",
+      desc: "Komposisi ideal karbohidrat, protein, lemak, vitamin dan mineral yang dibutuhkan anak usia 1-5 tahun untuk tumbuh kembang optimal.",
+      tag: "Gizi",
+      link: "https://www.halodoc.com/artikel/panduan-gizi-seimbang-untuk-anak-balita",
+      icon: <IconLeaf className="text-emerald-500" />,
+      accent: "emerald",
+    },
+    {
+      title: "Milestones Perkembangan Anak 0-5 Tahun",
+      desc: "Panduan lengkap tahapan perkembangan motorik, bahasa, kognitif, dan sosial anak sesuai standar WHO.",
+      tag: "Perkembangan",
+      link: "https://www.halodoc.com/artikel/milestones-perkembangan-anak",
+      icon: <IconStethoscope className="text-blue-500" />,
+      accent: "blue",
+    },
+    {
+      title: "Resep MPASI Bergizi untuk Usia 6-12 Bulan",
+      desc: "Ide resep harian MPASI bergizi tinggi zat besi, protein, dan omega-3 untuk mencegah kekurangan gizi pada bayi.",
+      tag: "MPASI",
+      link: "https://www.halodoc.com/artikel/resep-mpasi-sehat-untuk-bayi-usia-6-12-bulan",
+      icon: <IconChefHat className="text-amber-500" />,
+      accent: "amber",
+    },
+    {
+      title: "1000 Hari Pertama Kehidupan: Masa Kritis Anak",
+      desc: "Mengapa periode dari kehamilan hingga usia 2 tahun menentukan kualitas kesehatan dan kecerdasan anak seumur hidup.",
+      tag: "Penting",
+      link: "https://www.halodoc.com/artikel/1000-hari-pertama-kehidupan",
+      icon: <IconHeartbeat className="text-rose-500" />,
+      accent: "rose",
+    },
+    {
+      title: "Kenali Tanda-Tanda Stunting Sejak Dini",
+      desc: "Cara mengenali gejala awal stunting pada anak dan langkah intervensi yang tepat sebelum terlambat.",
+      tag: "Stunting",
+      link: "https://rspp.co.id/artikel-detail-734-Stunting-di-Indonesia-Penyebab,-Dampak,-dan-Upaya-Pencegahan-.html",
+      icon: <IconBook2 className="text-violet-500" />,
+      accent: "violet",
+    },
+    {
+      title: "Pola Asuh Positif untuk Tumbuh Kembang Anak",
+      desc: "Tips praktik parenting yang mendukung perkembangan emosional, kognitif, dan fisik anak secara seimbang.",
+      tag: "Parenting",
+      link: "https://kemkes.go.id/id/cegah-stunting-dengan-perbaikan-pola-makan-pola-asuh-dan-sanitasi-2",
+      icon: <IconUsers className="text-sky-500" />,
+      accent: "sky",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-slate-50 font-[sans-serif] text-slate-800">
       
@@ -63,7 +123,7 @@ export default function LandingPage() {
 
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
             <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mb-4">
-              
+              <IconRuler2 className="text-red-500" size={24} />
             </div>
 
             <h3 className="font-bold text-lg text-slate-900 mb-2">
@@ -78,7 +138,7 @@ export default function LandingPage() {
 
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
             <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
-              
+              <IconBrain className="text-blue-500" size={24} />
             </div>
 
             <h3 className="font-bold text-lg text-slate-900 mb-2">
@@ -93,7 +153,7 @@ export default function LandingPage() {
 
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
             <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center mb-4">
-              
+              <IconShieldCheck className="text-green-500" size={24} />
             </div>
 
             <h3 className="font-bold text-lg text-slate-900 mb-2">
@@ -216,6 +276,57 @@ export default function LandingPage() {
             </div>
         
 
+        </div>
+      </section>
+
+      {/* Artikel & Edukasi */}
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="text-center mb-12">
+          <span className="bg-indigo-100 text-indigo-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
+            Edukasi
+          </span>
+          <h2 className="mt-4 text-3xl md:text-4xl font-black text-slate-900">Artikel & Tips Kesehatan</h2>
+          <p className="text-slate-500 mt-3 max-w-xl mx-auto">Kumpulan artikel terpercaya untuk membantu Anda memahami dan mencegah stunting pada anak.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {artikel.map((item, index) => {
+            const c = accentMap[item.accent];
+            return (
+              <a
+                key={index}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-transparent cursor-pointer flex flex-col"
+              >
+                <div className={`h-1.5 w-full bg-gradient-to-r ${c.gradient}`} />
+                
+                <div className="p-6 flex flex-col flex-1">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`p-2.5 ${c.iconBg} rounded-xl ${c.text} group-hover:bg-${item.accent}-600 group-hover:text-white transition-all duration-300`}>
+                      {item.icon}
+                    </div>
+                    <span className={`text-[10px] font-black uppercase tracking-wider ${c.tagBg} px-2.5 py-1 rounded-full`}>
+                      {item.tag}
+                    </span>
+                  </div>
+
+                  <h3 className="text-base font-bold text-slate-900 leading-snug mb-2 group-hover:text-indigo-600 transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-slate-500 leading-relaxed flex-1">{item.desc}</p>
+
+                  <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-xs font-semibold text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      Baca Selengkapnya
+                    </span>
+                    <IconExternalLink className="text-slate-300 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all duration-300" size={16} />
+                  </div>
+                </div>
+              </a>
+            );
+          })}
         </div>
       </section>
 

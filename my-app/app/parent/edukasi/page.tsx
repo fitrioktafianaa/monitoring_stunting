@@ -62,9 +62,14 @@ export default function EdukasiParent() {
       <div className="mt-10 bg-slate-800 p-8 rounded-2xl text-center text-white">
         <h3 className="font-bold text-lg">Butuh Konsultasi Lanjut?</h3>
         <p className="text-slate-400 text-sm mt-2 mb-6">Hubungi petugas puskesmas atau dokter spesialis anak di Puskesmas terdekat.</p>
-        <button className="bg-blue-600 px-6 py-3 rounded-xl text-sm font-bold hover:bg-blue-500 transition cursor-pointer">
-          Cari Lokasi Puskesmas Terdekat
-        </button>
+        <a
+          href="https://www.google.com/maps/search/puskesmas+terdekat"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-blue-600 px-6 py-3 rounded-xl text-sm font-bold hover:bg-blue-500 transition cursor-pointer"
+        >
+          Hubungi Petugas Puskesmas
+        </a>
       </div>
     </div>
   );
