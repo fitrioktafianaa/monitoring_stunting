@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { 
@@ -50,6 +50,34 @@ export default function DataAnakPage() {
     { id: 9, nama: "Citra Dewi", lahir: "03 Ags 2023 (23 bln)", ibu: "Harmini", jk: "Perempuan" },
     { id: 10, nama: "Dani Kurniawan", lahir: "17 Mei 2024 (13 bln)", ibu: "Suci Rahayu", jk: "Laki-laki" },
   ]);
+
+  // Load data tambahan dari localStorage
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem('dataBalitaTambahan') || '[]');
+    if (saved.length > 0) {
+      setDataBalita(prev => {
+        const next = [...prev];
+        saved.forEach((item: { id: number; nama: string; lahir: string; ibu: string; jk: string }) => {
+          const idx = next.findIndex(d => d.id === item.id);
+          if (idx !== -1) {
+            next[idx] = { ...next[idx], nama: item.nama, lahir: item.lahir, ibu: item.ibu, jk: item.jk };
+          } else {
+            next.push(item);
+          }
+        });
+        return next;
+      });
+      setDataDetailAnak(prev => {
+        const next = { ...prev };
+        saved.forEach((item: { id: number; detail: Record<string, unknown> }) => {
+          if (item.detail) {
+            next[item.id] = item.detail as typeof next[number];
+          }
+        });
+        return next;
+      });
+    }
+  }, []);
 
   // State untuk Form Input Pengukuran
   const [formPengukuran, setFormPengukuran] = useState({
@@ -807,7 +835,7 @@ export default function DataAnakPage() {
                       9: { bbScore: "+0.5", bbStatus: "Normal", bbColor: "emerald", tbScore: "+0.2", tbStatus: "Normal", tbColor: "emerald" },
                       10: { bbScore: "-1.0", bbStatus: "Normal", bbColor: "emerald", tbScore: "-1.9", tbStatus: "Normal", tbColor: "emerald" },
                     };
-                    const s = statusData[anak.id];
+                    const s = statusData[anak.id] || { bbScore: "0", bbStatus: "Normal", bbColor: "emerald", tbScore: "0", tbStatus: "Normal", tbColor: "emerald" };
                     return (
                     <tr key={anak.id} className="hover:bg-slate-50 transition-colors">
                       <td className="p-4 font-bold text-slate-800">{anak.nama}</td>
